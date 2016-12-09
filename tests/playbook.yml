@@ -1,5 +1,9 @@
 ---
-- hosts: all
+- hosts: ansible-role-syslog-forward-openbsd
   gather_facts: false
-  roles:
-    - role: ansible-role-example
+  roles: [ role: ansible-role-openbsd-bootstrap ]
+
+- hosts: all
+  vars:
+      syslog_server: 169.254.254.254
+  roles: [ role: ansible-role-syslog-forward ]
