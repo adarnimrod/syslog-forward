@@ -1,0 +1,11 @@
+{#
+$DefaultNetstreamDriver gtls
+$DefaultNetstreamDriverCAFile {{ tls_ca_cert_path }}
+$DefaultNetstreamDriverCertFile {{ tls_cert_path }}
+$DefaultNetstreamDriverKeyFile {{ tls_key_path }}
+$ActionSendStreamDriverAuthMode x509/name
+#}
+
+$ActionSendStreamDriverPermittedPeer {{ syslog_server }}
+$ActionSendStreamDriverMode 1
+*.* @@{{ syslog_server }}

@@ -1,2 +1,4 @@
 ---
-# defaults file for ansible-role-example
+# defaults file for ansible-role-syslog-forward
+
+syslog_server:

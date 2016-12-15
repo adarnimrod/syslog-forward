@@ -1,2 +1,12 @@
 ---
-# handlers file for ansible-role-example
+# handlers file for ansible-role-syslog-forward
+
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: Restart syslogd
+  service:
+    name: syslogd
+    state: restarted

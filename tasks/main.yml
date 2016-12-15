@@ -1,7 +1,35 @@
 ---
-# tasks file for ansible-role-example
+# tasks file for ansible-role-syslog-forward
 
-- assert:
-    that:
-        - ansible_os_family == 'OpenBSD'
-        - ansible_distribution_release == '5.9'
+- name: Assert
+  assert:
+    that: ansible_os_family in [ 'Debian', 'OpenBSD' ]
+
+- name: APT install rsyslog
+  when: ansible_os_family == 'Debian'
+  apt:
+    name: rsyslog-gnutls
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Configure rsyslog forwarding
+  when: ansible_os_family == 'Debian'
+  template:
+    src: forwarding.conf.j2
+    dest: /etc/rsyslog.d/forwarding.conf
+    owner: root
+    group: root
+    mode: 0o0644
+  notify:
+  - Restart rsyslog
+
+- name: Configure syslogd forwarding
+  when: ansible_os_family == 'OpenBSD'
+  lineinfile:
+    dest: /etc/syslog.conf
+    line: '*.* @tls://{{ syslog_server}}'
+    regexp: '^\*.\* '
+    state: present
+  notify:
+  - Restart syslogd
