@@ -13,4 +13,6 @@ galaxy_info:
     versions:
     - jessie
   galaxy_tags: [ syslog ]
-dependencies: []
+dependencies:
+- src: adarnimrod.ca-store
+  name: ca-store

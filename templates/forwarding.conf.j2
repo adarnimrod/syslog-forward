@@ -1,8 +1,8 @@
 {#
 $DefaultNetstreamDriver gtls
-$DefaultNetstreamDriverCAFile {{ tls_ca_cert_path }}
-$DefaultNetstreamDriverCertFile {{ tls_cert_path }}
-$DefaultNetstreamDriverKeyFile {{ tls_key_path }}
+$DefaultNetstreamDriverCAFile /etc/ssl/certs/ca-certificates.crt
+$DefaultNetstreamDriverCertFile {{ syslog_cert_file }}
+$DefaultNetstreamDriverKeyFile {{ syslog_key_file }}
 $ActionSendStreamDriverAuthMode x509/name
 #}
 

@@ -2,3 +2,5 @@
 # defaults file for syslog-forward
 
 syslog_server:
+syslog_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+syslog_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
