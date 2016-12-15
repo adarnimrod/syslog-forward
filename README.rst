@@ -1,12 +1,15 @@
 Syslog forwarding
 #################
 
+.. image:: https://travis-ci.org/adarnimrod/syslog-forward.svg?branch=master
+    :target: https://travis-ci.org/adarnimrod/syslog-forward
+
 Configure syslog forwarding (syslogd on OpenBSD, rsyslog on Debian).
 
 Requirements
 ------------
 
-See :code:`meta/main.yml` and assertions at top of :code:`tasks/main.yml`.
+See :code:`meta/main.yml` and assertions at the top of :code:`tasks/main.yml`.
 
 Role Variables
 --------------
@@ -26,17 +29,22 @@ See :code:`tests/playbook.yml`.
 Testing
 -------
 
-To install the dependencies:
+Testing requires Python 2.7 and either Docker or Vagrant and Virtualbox.
+Install the Python dependencies, dependent roles and roles required for
+testing:
 
 .. code:: shell
 
-    ansible-galaxy install git+file://$(pwd),$(git rev-parse --abbrev-ref HEAD)
+    pip install -r tests/requirements.txt
+    ansible-galaxy install git+file://$(pwd),$(git rev-parse --abbrev-ref HEAD) -p .molecule/roles
+    molecule dependency
 
 To run the full test suite:
 
 .. code:: shell
 
-    molecule test
+    pre-commit run --all-files
+    molecule test --platform all
 
 License
 -------

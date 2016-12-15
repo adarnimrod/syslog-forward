@@ -1,5 +1,5 @@
 ---
-# handlers file for ansible-role-syslog-forward
+# handlers file for syslog-forward
 
 - name: Restart rsyslog
   service:

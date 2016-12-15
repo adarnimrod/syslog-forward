@@ -1,4 +1,4 @@
 ---
-# defaults file for ansible-role-syslog-forward
+# defaults file for syslog-forward
 
 syslog_server:

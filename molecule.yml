@@ -1,12 +1,13 @@
 ---
 ansible:
-  verbose: v
+  verbose: vv
   playbook: tests/playbook.yml
   diff: True
+  config_file: ../ansible.cfg
 
-molecule:
-  testinfra_dir: tests
-  ansible_config_template: ansible.cfg
+dependency:
+  name: galaxy
+  requirements_file: tests/requirements.yml
 
 vagrant:
   providers:
@@ -14,12 +15,29 @@ vagrant:
     type: virtualbox
   platforms:
   - name: openbsd
-    box: kaorimatz/openbsd-5.9-amd64
-  - name: debian
+    box: kaorimatz/openbsd-6.0-amd64
+  - name: jessie
     box: debian/jessie64
   instances:
-  - name: ansible-role-syslog-forward
+  - name: syslog-forward
     options:
         append_platform_to_hostname: yes
   raw_config_args:
   - 'vm.synced_folder ".", "/vagrant", disabled: true'
+  - 'vbguest.auto_update = false'
+  - 'landrush.enabled = false'
+  - 'landrush_ip.override = false'
+
+docker:
+  containers:
+  - name: syslog-forward-jessie
+    image: debian
+    image_version: jessie
+    command: /sbin/init
+    privileged: True
+    volume_mounts:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+    environment:
+        DEBIAN_FRONTEND: noninteractive
+        container: docker

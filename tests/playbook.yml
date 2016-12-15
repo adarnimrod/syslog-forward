@@ -1,9 +1,14 @@
 ---
-- hosts: ansible-role-syslog-forward-openbsd
+- hosts: syslog-forward-openbsd
   gather_facts: false
-  roles: [ role: ansible-role-openbsd-bootstrap ]
+  roles: [adarnimrod.openbsd-bootstrap]
+
+- hosts: syslog-forward-xenial
+  gather_facts: false
+  roles: [adarnimrod.debian-bootstrap]
 
 - hosts: all
-  vars:
+  strategy: free
+  roles:
+    - role: syslog-forward
       syslog_server: 169.254.254.254
-  roles: [ role: ansible-role-syslog-forward ]

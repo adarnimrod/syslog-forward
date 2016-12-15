@@ -1,12 +1,35 @@
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: 6dfcb89af3c9b4d172cc2e5a8a2fa0f54615a338
+    sha: 7539d8bd1a00a3c1bfd34cdb606d3a6372e83469
     hooks:
     -   id: check-added-large-files
     -   id: check-json
     -   id: check-xml
     -   id: check-yaml
     -   id: check-merge-conflict
--   repo: https://www.shore.co.il/git/ansible-pre-commit/
-    sha: 94b506c144d4e22ebc1deef637a818db13bcaca5
+    -   id: flake8
+    -   id: check-symlinks
+-   repo: https://github.com/adarnimrod/ansible-pre-commit.git
+    sha: 0fadd691465b97db8992cfc66650f630e433324b
     hooks:
-    -   id: ansible-pre-commit
+    -   id: ansible-syntax-check
+        always_run: true
+        files: tests/playbook.yml
+        args:
+        - tests/playbook.yml
+-   repo: https://github.com/willthames/ansible-lint
+    sha: 959ab0f525e9abb19cf75f34381015cf33695f61
+    hooks:
+    -   id: ansible-lint
+        always_run: true
+        files: tests/playbook.yml
+        args:
+        - tests/playbook.yml
+-   repo: local
+    hooks:
+    -   id: piprot
+        name: piprot
+        description: Check up-to-date Python requirements
+        language: system
+        entry: piprot --quiet --outdated tests/requirements.txt
+        files: requirements.txt
+        always_run: true

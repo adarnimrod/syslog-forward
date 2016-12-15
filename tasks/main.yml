@@ -1,9 +1,10 @@
 ---
-# tasks file for ansible-role-syslog-forward
+# tasks file for syslog-forward
 
-- name: Assert
+- name: Assertions
   assert:
-    that: ansible_os_family in [ 'Debian', 'OpenBSD' ]
+    that:
+        - ansible_os_family in ['OpenBSD', 'Debian']
 
 - name: APT install rsyslog
   when: ansible_os_family == 'Debian'
