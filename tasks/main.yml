@@ -22,6 +22,7 @@
     owner: root
     group: root
     mode: 0o0644
+    validate: rsyslogd -N1
   notify:
   - Restart rsyslog
 
